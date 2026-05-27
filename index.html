@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en" x-data="app()" :class="{'dark':dark}" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Jyd — Ethical H4cker. Contributing to organizations' over all security posture.">
+<meta name="keywords" content="Ethical hacker, Penetration Tester, Application Security Engineer, VAPT Specialist">
+<meta name="author" content="Eliott">
+<meta property="og:title" content="Eliott — Freelance UI/UX Designer">
+<meta property="og:description" content="I design and build digital products that people love to use.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eliott.dev">
+<title>Jeydori — Ethical H4cker &amp; Penetration Tester &amp; Application Security Engineer</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: { display: ['PT Sans','sans-serif'], body: ['DM Sans','sans-serif'] },
+      colors: { accent: '#FF6B2B', 'accent-light': '#FF8F5C' }
+    }
+  }
+}
+</script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{font-family:'DM Sans',sans-serif}
+h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif}
+body{transition:background-color .3s,color .3s}
+
+/* noise overlay */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#FF6B2B;border-radius:99px}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* nav underline animation */
+.nl{position:relative}
+.nl::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .22s cubic-bezier(.4,0,.2,1)}
+.nl:hover::after,.nl.on::after{width:100%}
+.nl.on{font-weight:500}
+
+/* shimmer button */
+.shimmer{position:relative;overflow:hidden}
+.shimmer::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1)}
+.shimmer:hover::after{left:160%}
+
+/* photo frames */
+.pf{overflow:hidden;background:#d4d4d8}
+.pf img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* card hover */
+.card-h{transition:transform .28s cubic-bezier(.4,0,.2,1),border-color .18s}
+.card-h:hover{transform:translateY(-4px)}
+
+/* skill tag */
+.stag{transition:border-color .18s}
+
+[x-cloak]{display:none!important}
+</style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+
+<!-- ═══ NAV ═══ -->
+<header class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+  :class="sc?'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5':''">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+
+    <a href="#hero" class="font-display font-bold text-xl tracking-tight relative z-10">
+      <span class="text-zinc-900 dark:text-white">jey</span><span class="text-accent">dori</span>
+    </a>
+
+    <ul class="hidden md:flex items-center gap-8 text-sm" role="list">
+      <li><a href="#skills" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='skills'?'on !text-zinc-900 dark:!text-white':''">Skills</a></li>
+      <li><a href="#credentials"     class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='credentials'?'on !text-zinc-900 dark:!text-white':''">Credentials</a></li>
+      <li><a href="#about"   class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='about'?'on !text-zinc-900 dark:!text-white':''">About</a></li>
+      <li><a href="#experience" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='experience'?'on !text-zinc-900 dark:!text-white':''">Experience</a></li>
+      <li><a href="#education"    class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='education'?'on !text-zinc-900 dark:!text-white':''">Education</a></li>
+      <li><a href="#contact" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='contact'?'on !text-zinc-900 dark:!text-white':''">Contact</a></li>
+    </ul>
+
+    <div class="flex items-center gap-3">
+      <!-- dark toggle -->
+      <button @click="dark=!dark" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors" :aria-label="dark?'Light mode':'Dark mode'">
+        <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg x-show="dark"  class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+      </button>
+      <!-- hire me -->
+      <a href="#contact" class="hidden md:inline-flex items-center gap-2 shimmer bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">
+        Hire me <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <!-- hamburger -->
+      <button @click="mm=!mm" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" :aria-expanded="mm" aria-label="Toggle menu">
+        <svg x-show="!mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg x-show="mm"  class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- mobile menu -->
+  <div x-show="mm" x-cloak
+    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+    class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+    <ul class="flex flex-col px-6 py-5 gap-4 text-sm font-medium" role="list">
+      <li><a href="#skills" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Skills</a></li>
+      <li><a href="#credentials"     @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Credentials</a></li>
+      <li><a href="#about"   @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">About</a></li>
+      <li><a href="#experience" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Experience</a></li>
+      <li><a href="#education"    @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Education</a></li>
+      <li><a href="#contact" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Contact</a></li>
+      <li class="pt-2 border-t border-zinc-100 dark:border-zinc-900">
+        <a href="#contact" @click="mm=false" class="inline-flex shimmer bg-accent text-white font-medium text-sm px-5 py-2.5 rounded-full">Hire me →</a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
+  <div class="absolute top-1/4 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute bottom-1/4 left-0 w-64 h-64 bg-zinc-200/50 dark:bg-zinc-800/30 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+
+      <div>
+        <p class="reveal text-sm font-medium text-accent tracking-widest uppercase mb-4">Available for work</p>
+        <h1 class="reveal d1 font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-zinc-900 dark:text-white mb-6">
+          Hi, I'm <span class="text-accent">jeydori</span>
+        </h1>
+        <p class="reveal d2 text-lg md:text-xl text-zinc-500 dark:text-zinc-400 font-light leading-relaxed max-w-md mb-10">
+          An <strong class="font-medium text-zinc-700 dark:text-zinc-300">Ethical H4cker</strong> — ethically breaking systems to uncover vulnerabilities and elevate organizations’ security posture.
+        </p>
+        <div class="reveal d3 flex flex-wrap gap-4">
+          <a href="#contact" class="inline-flex items-center gap-2 border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium px-7 py-3.5 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors text-sm">Get in touch</a>
+        </div>
+        <div class="reveal d4 flex gap-10 mt-14 pt-8 border-t border-zinc-100 dark:border-zinc-900 overflow-x-auto">
+
+  <!-- License 1 -->
+  <div class="flex flex-col items-center shrink-0">
+    <img src="images/PRC.png" alt="" class="w-10 h-10 mb-2 object-contain" />
+    <p class="text-[10px] text-zinc-500 dark:text-zinc-400 leading-tight text-center">
+      ECE<br/>PRC
+    </p>
+  </div>
+
+  <!-- License 2 -->
+  <div class="flex flex-col items-center shrink-0">
+    <img src="images/PRC.png" alt="" class="w-10 h-10 mb-2 object-contain" />
+    <p class="text-[10px] text-zinc-500 dark:text-zinc-400 leading-tight text-center">
+      ECT<br/>PRC
+    </p>
+  </div>
+
+  <!-- Certification 1 -->
+  <div class="flex flex-col items-center shrink-0">
+    <img src="images/cwes.png" alt="" class="w-10 h-10 mb-2 object-contain" />
+    <p class="text-[10px] text-zinc-500 dark:text-zinc-400 leading-tight text-center">
+      CWES/CBBH<br/>HackTheBox
+    </p>
+  </div>
+
+  <!-- Certification 2 -->
+  <div class="flex flex-col items-center shrink-0">
+    <img src="images/capen.png" alt="" class="w-10 h-10 mb-2 object-contain" />
+    <p class="text-[10px] text-zinc-500 dark:text-zinc-400 leading-tight text-center">
+      CAPen<br/>The SecOps Group
+    </p>
+  </div>
+
+  <!-- Certification 3 -->
+  <div class="flex flex-col items-center shrink-0">
+    <img src="images/eJPT.png" alt="" class="w-10 h-10 mb-2 object-contain" />
+    <p class="text-[10px] text-zinc-500 dark:text-zinc-400 leading-tight text-center">
+      eJPT<br/>INE Security
+    </p>
+  </div>
+
+</div>
+
+      </div>
+
+      <div class="reveal d2 flex justify-center md:justify-end">
+        <div class="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96">
+          <div class="pf w-full h-full rounded-3xl">
+            <img src="images/profile 1.jfif?w=800&q=80" alt="" loading="eager">
+          </div>
+          <div class="absolute -bottom-4 -left-4 bg-accent text-white font-display font-bold text-sm px-4 py-2.5 rounded-2xl shadow-lg">Open to Work</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="mb-14">
+      <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">What I can do</p>
+      <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Skills</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <!-- Offensive -->
+      <article class="reveal d1 card-h group bg-zinc-200 dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors">
+        <div class="w-12 h-12 flex items-center justify-center bg-zinc-300 dark:bg-zinc-700 rounded-xl mb-6 group-hover:bg-zinc-400 dark:group-hover:bg-zinc-600 transition-colors">
+          <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 3h6M12 3v3M8 8L5 5M16 8l3-3M7 12H3M21 12h-4M8 16l-3 3M16 16l3 3"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 7h6a2 2 0 012 2v5a5 5 0 11-10 0V9a2 2 0 012-2z"/>
+            <circle cx="10" cy="11" r="1" fill="currentColor"/>
+            <circle cx="14" cy="11" r="1" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">Offensive Security</h3>
+        <p class="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+          From web applications to internal networks. Thorough vulnerability assessments and penetration testing that uncover real-world vulnerabilities, strengthening infrastructures, and deliver commercial-grade reports with clear remediation guidance.
+        </p>
+      </article>
+
+      <!-- Defensive -->
+      <article class="reveal d2 card-h group bg-zinc-200 dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors">
+        <div class="w-12 h-12 flex items-center justify-center bg-zinc-300 dark:bg-zinc-700 rounded-xl mb-6 group-hover:bg-zinc-400 dark:group-hover:bg-zinc-600 transition-colors">
+          <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3l7 4v5c0 5-3.5 8.5-7 9-3.5-.5-7-4-7-9V7l7-4z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">Defensive Security</h3>
+        <p class="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+          From detection to containment. Structured incident response and case handling across various blue team domains such as email security, endpoint security, web security, and identity security.
+        </p>
+      </article>
+
+      <!-- Dev -->
+      <article class="reveal d3 card-h group bg-zinc-200 dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors">
+        <div class="w-12 h-12 flex items-center justify-center bg-zinc-300 dark:bg-zinc-700 rounded-xl mb-6 group-hover:bg-zinc-400 dark:group-hover:bg-zinc-600 transition-colors">
+          <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">Software Development</h3>
+        <p class="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+          From design to deployment. Built AI-driven solutions, mobile applications, and Python modules extending ERP functionality, streamlining real-world challenges, and delivering scalable, production-ready systems across enterprise environments.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Credentials ═══ -->
+<section id="credentials" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
+      <div>
+        <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Learnings</p>
+        <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">
+          Credentials
+        </h2>
+      </div>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid md:grid-cols-2 gap-6 items-stretch">
+
+      <!-- LEFT: CWES (UNCHANGED CONTENT) -->
+      <article class="card-h reveal d1 group rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent flex flex-col">
+
+        <div class="pf w-full h-64 md:h-80">
+          <img src="images/cwes-full.jfif?w=900&q=80" alt="CWES" loading="lazy">
+        </div>
+
+        <div class="p-7 flex-1">
+
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">Server-side Attacks</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">Broken Authentication</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">API Attacks</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">...</span>
+          </div>
+
+          <h3 class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-1">
+  Certified Web Exploitation Specialist
+</h3>
+
+<div class="flex justify-between items-center text-xs text-zinc-500 dark:text-zinc-400">
+  <span class="bold">
+    Hack The Box
+  </span>
+
+  <span class="italic">
+    May 2026
+  </span>
+</div><br>  
+
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-5">
+            Gained hands-on experience in modern web application security through CWES, covering end-to-end offensive techniques, vulnerability exploitation, and structured penetration testing methodologies. Developed practical skills in identifying and exploiting common web vulnerabilities including SQL injection, cross-site scripting (XSS), command injection, file inclusion, authentication weaknesses, and session security flaws across realistic attack scenarios in controlled environments.<br><br>Built proficiency in analyzing HTTP traffic, using web proxies, conducting reconnaissance, fuzzing, and performing JavaScript deobfuscation to uncover hidden attack surfaces and security misconfigurations. Strengthened understanding of request manipulation, enumeration techniques, and web application behavior analysis to support comprehensive and systematic security assessments across diverse targets.<br><br>Explored advanced web security topics including API security testing, GraphQL attacks, file upload exploitation, brute-force techniques, and assessments of commonly deployed applications such as WordPress and similar CMS platforms. Applied offensive methodologies to simulate real-world attack chains, validate vulnerabilities, and assess potential business impact across modern application environments and architectures.<br><br>Enhanced the ability to execute structured penetration testing workflows from information gathering and exploitation to impact analysis and professional reporting. Developed a methodical approach to vulnerability validation, risk prioritization, and remediation guidance, reinforcing practical offensive security skills aligned with real-world web application assessments, security operations, and bug bounty processes.
+          </p>
+          <a href="pdf/cwes.pdf"
+             class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white">
+            View credential →
+          </a>
+
+        </div>
+      </article>
+
+      <!-- RIGHT SIDE (FULL ORIGINAL CONTENT RESTORED) -->
+      <div class="grid gap-6">
+
+        <!-- Card 1 -->
+        <div class="card-h reveal d2 group rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent p-6">
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">SQL Injection</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">AWS Cloud Security Misconfiguration</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">AWS XML External Entity Attack</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">...</span>
+          </div>
+
+          <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">
+            Certified AppSec Penetration Tester
+          </h3>
+
+          <div class="flex justify-between items-center text-xs text-zinc-500 dark:text-zinc-400">
+  <span class="bold">
+    The SecOps Group
+  </span>
+
+  <span class="italic">
+    April 2026
+  </span>
+</div><br>
+
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            Demonstrated practical expertise in identifying, exploiting, and reporting security vulnerabilities in modern web applications through hands-on penetration testing methodologies.
+          </p>
+
+          <a href="https://candidate.speedexam.net/certificate.aspx?SSTATE=am4131EniU8ntjp4bO5mXWY+AmNlNPo8ZcOzFmov7SZQWZACkOfB98XiJLN0+cY9BuDBJCsjNm16ucPlbBWBIFmwdLQpZavtZQkSRut9zI8="
+             class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white">
+            View credential →
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card-h reveal d3 group rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent p-6">
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">Web Application Security Assessment</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">Assessment Methodologies</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">Host and Network Security Assessment</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">...</span>
+          </div>
+
+          <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">
+            eLearnSecurity Junior Penetration Tester
+          </h3>
+
+          <div class="flex justify-between items-center text-xs text-zinc-500 dark:text-zinc-400">
+  <span class="bold">
+    INE Security
+  </span>
+
+  <span class="italic">
+    January 2026
+  </span>
+</div><br>
+
+
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            Validated foundational offensive security skills in network enumeration, exploitation, web application testing, and real-world penetration testing workflows.
+          </p>
+
+          <a href="https://certs.ine.com/471713d1-1f4c-46a8-8a13-00ad22d6b46d#acc.JPqykp3i"
+             class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white">
+            View credential →
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card-h reveal d4 group rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent p-6">
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">Object-Oriented Programming (OOP)</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">Unit Testing</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">Python</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">...</span>
+          </div>
+
+          <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">
+            CS50: Python Programming
+          </h3>
+
+          <div class="flex justify-between items-center text-xs text-zinc-500 dark:text-zinc-400">
+  <span class="bold">
+    Harvard University (Online)
+  </span>
+
+  <span class="italic">
+    May 2025
+  </span>
+</div><br>
+
+
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            Built foundational and intermediate Python programming skills through hands-on problem solving, automation, data handling, file operations, regular expressions, testing, and object-oriented programming concepts.
+          </p>
+
+          <a href="https://certificates.cs50.io/9eefd6aa-b197-4f61-a58a-21e8be9ee888.pdf?size=letter"
+             class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white">
+            View credential →
+          </a>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card-h reveal d4 group rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent p-6">
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">Electronic Circuits</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">Network Infrastructure</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">Signal Processing</span>
+            <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full">...</span>
+          </div>
+
+          <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">
+            Licensed Electronics Engineer and Electronics Technician
+          </h3>
+
+          <div class="flex justify-between items-center text-xs text-zinc-500 dark:text-zinc-400">
+  <span class="bold">
+    Professional Regulation Commission (Philippines)
+  </span>
+
+  <span class="italic">
+    April 2025
+  </span>
+</div>
+<br>
+
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            Professionally licensed in electronics engineering and technical operations, with competencies in communications systems, electronics design, troubleshooting, maintenance, and applied engineering principles.
+          </p>
+
+          <div class="flex flex-col gap-2 mt-3">
+            <a href="https://drive.google.com/file/d/1miRWhfYsNxASdhBZJrx7iOQBuCS2w40W/view"
+               class="text-sm font-medium text-zinc-900 dark:text-white">
+              View credential for ECE →
+            </a>
+            <a href="https://drive.google.com/file/d/1cj3Tb18rnAnOyRmh_9LEdcBB6KrjTUGT/view"
+               class="text-sm font-medium text-zinc-900 dark:text-white">
+              View credential for ECT →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+
+      <div class="reveal order-2 md:order-1">
+        <div class="pf w-full aspect-square max-w-sm mx-auto rounded-3xl">
+          <img src="images/profile 2.jfif?w=700&q=80" alt="" loading="lazy">
+        </div>
+      </div>
+
+      <div class="order-1 md:order-2">
+        <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">About me</p>
+        <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white leading-tight mb-6">A bit about<br>who I am</h2>
+        <p class="reveal d2 text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">
+          I'm Jyd Rey Mercado, a dedicated information security professional who consistently demonstrated academic excellence and now applies the same level of discipline, commitment, and continuous learning to my professional career. 
+        </p>
+        <p class="reveal d3 text-zinc-500 dark:text-zinc-400 leading-relaxed mb-8">
+          I have experience in both offensive and defensive cybersecurity domains, with a stronger focus on security assessments which strengthen the security posture of applications and network infrastructures.
+        </p>
+        <div class="reveal d4">
+          <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-3">Security Stack</p>
+          <div class="flex flex-wrap gap-2" role="list" aria-label="Skills">
+            <span role="listitem" class="stag text-sm bg-accent/10 border border-accent text-accent px-3.5 py-1.5 rounded-full hover:bg-accent hover:text-white transition">Burp Suite</span>
+            <span role="listitem" class="stag text-sm bg-accent/10 border border-accent text-accent px-3.5 py-1.5 rounded-full hover:bg-accent hover:text-white transition">OWASP ZAP</span>
+            <span role="listitem" class="stag text-sm bg-accent/10 border border-accent text-accent px-3.5 py-1.5 rounded-full hover:bg-accent hover:text-white transition">Metasploit</span>
+            <span role="listitem" class="stag text-sm bg-accent/10 border border-accent text-accent px-3.5 py-1.5 rounded-full hover:bg-accent hover:text-white transition">Nmap</span>
+            <span role="listitem" class="stag text-sm bg-accent/10 border border-accent text-accent px-3.5 py-1.5 rounded-full hover:bg-accent hover:text-white transition">Impacket</span>
+            <span role="listitem" class="stag text-sm bg-accent/10 border border-accent text-accent px-3.5 py-1.5 rounded-full hover:bg-accent hover:text-white transition">Evil-WinRM</span>
+            <span role="listitem" class="stag text-sm bg-accent/10 border border-accent text-accent px-3.5 py-1.5 rounded-full hover:bg-accent hover:text-white transition">PHP</span>
+            <span role="listitem" class="stag text-sm bg-accent/10 border border-accent text-accent px-3.5 py-1.5 rounded-full hover:bg-accent hover:text-white transition">Python</span>
+            <span role="listitem" class="stag text-sm bg-accent/10 border border-accent text-accent px-3.5 py-1.5 rounded-full hover:bg-accent hover:text-white transition">...</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Work Experience ═══ -->
+<section id="experience" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    
+    <div class="mb-14">
+      <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">
+        Work
+      </p>
+      <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">
+        Experience
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <!-- CARD 1 -->
+      <blockquote class="reveal d1 bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-7 border border-zinc-100 dark:border-zinc-800 flex flex-col h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+
+        <div class="flex-1">
+          <ul class="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-6 list-disc pl-5 space-y-2">
+            <li>Conducts vulnerability assessments and penetration testing across web applications and network systems.</li>
+            <li>Delivers comprehensive security assessment reports and remediation recommendations.</li>
+            <li>Supports case handling in blue team domains including Email Security, Web Security, Identity Security, and Endpoint Security.</li>
+          </ul>
+        </div>
+
+        <footer class="mt-auto flex items-center gap-3">
+          <div class="pf w-10 h-10 rounded-full shrink-0">
+            <img src="images/intertek.png" alt="" loading="lazy">
+          </div>
+
+          <div class="flex-1">
+            <p class="font-medium text-sm text-zinc-900 dark:text-white">
+              Junior Cyber Security Analyst
+            </p>
+
+            <div class="flex justify-between items-center">
+              <p class="text-xs text-zinc-500">Intertek</p>
+              <span class="text-xs text-zinc-500 italic">2025 - Present</span>
+            </div>
+          </div>
+        </footer>
+
+      </blockquote>
+
+      <!-- CARD 2 -->
+      <blockquote class="reveal d1 bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-7 border border-zinc-100 dark:border-zinc-800 flex flex-col h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+
+        <div class="flex-1">
+          <ul class="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-6 list-disc pl-5 space-y-2">
+            <li>Trained computer vision models such as YOLOv8 for real-world detection and classification.</li>
+            <li>Built monitoring applications for tracking system status, performance, and sensor outputs in real time.</li>
+            <li>Designed and implemented embedded system solutions integrating software with physical hardware components.</li>
+          </ul>
+        </div>
+
+        <footer class="mt-auto flex items-center gap-3">
+          <div class="pf w-10 h-10 rounded-full shrink-0">
+            <img src="images/self-employed.png" alt="" loading="lazy">
+          </div>
+
+          <div class="flex-1">
+            <p class="font-medium text-sm text-zinc-900 dark:text-white">
+              Freelance Software Developer
+            </p>
+
+            <div class="flex justify-between items-center">
+              <p class="text-xs text-zinc-500">Self-Employed</p>
+              <span class="text-xs text-zinc-500 italic">2021 - 2024</span>
+            </div>
+          </div>
+        </footer>
+
+      </blockquote>
+
+      <!-- CARD 3 -->
+      <blockquote class="reveal d1 bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-7 border border-zinc-100 dark:border-zinc-800 flex flex-col h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+
+        <div class="flex-1">
+          <ul class="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-6 list-disc pl-5 space-y-2">
+            <li>Trained in Enterprise Resource Planning (ERP) application module development.</li>
+            <li>Built custom Python modules extending ERP functionality.</li>
+            <li>Experienced using Docker for containerization and multi-container management.</li>
+          </ul>
+        </div>
+
+        <footer class="mt-auto flex items-center gap-3">
+          <div class="pf w-10 h-10 rounded-full shrink-0">
+            <img src="images/adept.png" alt="" loading="lazy">
+          </div>
+
+          <div class="flex-1">
+            <p class="font-medium text-sm text-zinc-900 dark:text-white">
+              Software Developer Intern
+            </p>
+
+            <div class="flex justify-between items-center">
+              <p class="text-xs text-zinc-500">Adept Solutions</p>
+              <span class="text-xs text-zinc-500 italic">2023 - 2023</span>
+            </div>
+          </div>
+        </footer>
+
+      </blockquote>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Education ═══ -->
+<section id="education" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
+      <div>
+        <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">
+          Background
+        </p>
+        <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">
+          Education
+        </h2>
+      </div>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid md:grid-cols-3 gap-6 items-stretch">
+
+      <!-- CARD 1 -->
+      <article class="reveal d1 card-h group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent flex flex-col h-full">
+
+        <div class="pf w-full h-44">
+          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=700&q=80"
+               class="w-full h-full object-cover" alt="">
+        </div>
+
+        <div class="p-6 flex flex-col flex-1">
+
+          <!-- TITLE + LOGO -->
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <h3 class="font-display font-bold text-lg text-zinc-900 dark:text-white leading-snug">
+              Bachelor of Science in Electronics Engineering
+            </h3>
+
+            <img src="images/pup.png"
+                 class="w-8 h-8 rounded-full object-cover shrink-0">
+          </div>
+
+          <!-- SCHOOL + DATE -->
+          <div class="flex justify-between items-center mb-4">
+            <p class="text-xs text-zinc-500">Polytechnic University of the Philippines</p>
+            <span class="text-xs text-zinc-400 italic">2020 - 2024</span>
+          </div>
+
+          <!-- BULLETS -->
+          <ul class="text-sm text-zinc-500 dark:text-zinc-400 list-disc pl-5 space-y-2 leading-relaxed flex-1">
+            <li>Graduated with Latin Honors (Cum Laude).</li>
+            <li>Developed Route4Me, a real-time GPS tracking mobile application for PUV passengers in Rizal Province, 
+built for Android and iOS using a single codebase and integrated with Google Cloud services. 
+</li>
+            <li>Developed Ligpit Pang Higpit, SiliAI, and BanaNAS, AI-integrated robotic systems utilizing YOLOv8 and 
+YOLO-NAS models. </li>
+            <li>Survived Advanced Mathematics, Discrete Mathematics, Calculus, Differential Equations, and Statistics for 
+computational problem-solving.</li>
+          </ul>
+
+        </div>
+      </article>
+
+      <!-- CARD 2 -->
+      <article class="reveal d1 card-h group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent flex flex-col h-full">
+
+        <div class="pf w-full h-44">
+          <img src="https://wallpaperaccess.com/full/2871046.jpg?w=800&q=80"
+               class="w-full h-full object-cover" alt="">
+        </div>
+
+        <div class="p-6 flex flex-col flex-1">
+
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <h3 class="font-display font-bold text-lg text-zinc-900 dark:text-white leading-snug">
+              Science, Technology, Engineering, and Mathematics
+            </h3>
+
+            <img src="images/anhs.png"
+                 class="w-7 h-7 rounded-full object-cover shrink-0">
+          </div>
+
+          <div class="flex justify-between items-center mb-4">
+            <p class="text-xs text-zinc-500">Angono National High School</p>
+            <span class="text-xs text-zinc-400 italic">2018 - 2020</span>
+          </div>
+
+          <ul class="text-sm text-zinc-500 dark:text-zinc-400 list-disc pl-5 space-y-2 leading-relaxed flex-1">
+            <li>Graduated with Honors. </li>
+            <li>Built foundations in science, math, and technical problem solving.</li>
+            <li>Developed early programming and engineering interest projects.</li>
+            
+          </ul>
+
+        </div>
+      </article>
+
+      <!-- CARD 3 -->
+      <article class="reveal d1 card-h group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent flex flex-col h-full">
+
+        <div class="pf w-full h-44">
+          <img src="https://img.freepik.com/premium-vector/math-theory-mathematics-calculus-class-chalkboard-algebra-geometry-science-handwritten-formulas-vector-education-concept-formula-theory-blackboard-science-study-illustration_102902-3343.jpg?w=700&q=80"
+               class="w-full h-full object-cover" alt="">
+        </div>
+
+        <div class="p-6 flex flex-col flex-1">
+
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <h3 class="font-display font-bold text-lg text-zinc-900 dark:text-white leading-snug">
+              Junior High General Education
+            </h3>
+
+            <img src="images/mnhs.png"
+                 class="w-8 h-8 rounded-full object-cover shrink-0">
+          </div>
+
+          <div class="flex justify-between items-center mb-4">
+            <p class="text-xs text-zinc-500">Muzon National High School</p>
+            <span class="text-xs text-zinc-400 italic">2014 - 2018</span>
+          </div>
+
+          <ul class="text-sm text-zinc-500 dark:text-zinc-400 list-disc pl-5 space-y-2 leading-relaxed flex-1">
+            <li>Graduated with Honors. </li>
+            <li>Built foundational academic and technical skills.</li>
+            <li>Strengthened discipline and analytical thinking.</li>
+          </ul>
+
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="bg-zinc-900 dark:bg-zinc-800 rounded-3xl p-10 md:p-16 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute bottom-0 left-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl pointer-events-none" aria-hidden="true"></div>
+
+      <div class="relative z-10 grid md:grid-cols-2 gap-12 items-start">
+
+        <div>
+          <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Get in touch</p>
+          <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">Let's work<br>together</h2>
+          <p class="reveal d2 text-zinc-400 leading-relaxed mb-8">I'm Open to security engagements including but not limited to vulnerability assessment, penetration testing, and bug bounty hunting.</p>
+
+          <div class="reveal d3 flex flex-col gap-4">
+            <a href="mailto:hello@eliott.dev" class="group flex items-center gap-3 text-zinc-400 hover:text-white transition-colors">
+              <span class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-colors shrink-0">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </span>
+              <span class="text-sm">jydrey.mercado.offsec@gmail.com</span>
+            </a>
+            <a href="https://www.linkedin.com/in/jyd-rey-mercado-05285518a" rel="noopener noreferrer" target="_blank" class="group flex items-center gap-3 text-zinc-400 hover:text-white transition-colors">
+              <span class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-colors shrink-0">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </span>
+              <span class="text-sm">linkedin.com/in/jyd-rey-mercado</span>
+            </a>
+            <a href="https://github.com/jeydori" rel="noopener noreferrer" target="_blank" class="group flex items-center gap-3 text-zinc-400 hover:text-white transition-colors">
+              <span class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-colors shrink-0">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </span>
+              <span class="text-sm">github.com/jeydori</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal d2">
+          <form action="#" method="POST" novalidate>
+            <div class="flex flex-col gap-4">
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="fname" class="block text-xs font-medium text-zinc-400 mb-1.5">Name <span aria-hidden="true">*</span></label>
+                  <input type="text" id="fname" name="name" placeholder="Jane Smith" required autocomplete="name"
+                    class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors">
+                </div>
+                <div>
+                  <label for="femail" class="block text-xs font-medium text-zinc-400 mb-1.5">Email <span aria-hidden="true">*</span></label>
+                  <input type="email" id="femail" name="email" placeholder="jane@company.com" required autocomplete="email"
+                    class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors">
+                </div>
+              </div>
+              <div>
+                <label for="fsubject" class="block text-xs font-medium text-zinc-400 mb-1.5">Subject</label>
+                <input type="text" id="fsubject" name="subject" placeholder="Project inquiry"
+                  class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors">
+              </div>
+              <div>
+                <label for="fmessage" class="block text-xs font-medium text-zinc-400 mb-1.5">Message <span aria-hidden="true">*</span></label>
+                <textarea id="fmessage" name="message" rows="4" placeholder="Tell me about your project..." required
+                  class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors resize-none"></textarea>
+              </div>
+              <button type="submit" class="shimmer w-full bg-accent text-white font-display font-bold text-sm py-3.5 rounded-xl hover:bg-accent-light transition-colors">
+                Send message →
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="border-t border-zinc-100 dark:border-zinc-900">
+  <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-zinc-400">© <span id="yr"></span> Jeydori. All rights reserved. <br> Developed by <a href="" target="_blank" class="font-bold">Jyd Rey Mercado</p>
+    <p class="text-xs text-zinc-500">Built with
+      <a href="https://tailwindcss.com" rel="noopener noreferrer" target="_blank" class="hover:text-accent transition-colors">Tailwind CSS</a>
+      &amp;
+      <a href="https://alpinejs.dev" rel="noopener noreferrer" target="_blank" class="hover:text-accent transition-colors">Alpine.js</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+function app() {
+  return {
+    dark: false,
+    mm: false,
+    sc: false,
+    s: 'hero',
+
+    init() {
+      // dark mode
+      this.dark = localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+
+      // scroll
+      window.addEventListener('scroll', () => {
+        this.sc = window.scrollY > 20;
+        this.updateSection();
+      }, { passive: true });
+
+      // reveal
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+      // year
+      document.getElementById('yr').textContent = new Date().getFullYear();
+    },
+
+    updateSection() {
+      const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 60;
+      if (atBottom) { this.s = 'contact'; return; }
+      const ids = ['contact','education','experience','about','credentials','skills','hero'];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 130) { this.s = id; return; }
+      }
+    }
+  }
+}
+</script>
+
+</body>
+</html>
